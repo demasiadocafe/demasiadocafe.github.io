@@ -1,24 +1,29 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Patrones emergentes... ¿vida?</title>
+    <title>Artificial..? Life!</title>
   </head>
   <body>
-    <h1>Patrones emergentes... ¿vida?</h1>
+    <h1>Artificial..? Life!</h1>
     <canvas id="life" width="500" height="500"></canvas>
     <script>
-      m=document.getElementById("life").getContext('2d')
-      draw=(x,y,c,s)=>{
+      m = document.getElementById("life").getContext('2d')
+      
+      draw = (x, y, c, s) => {
         m.fillStyle=c
         m.fillRect(x, y, s, s)
       }
-      particles=[]
-      particle=(x,y,c)=>{
+      
+      particles = []
+      
+      particle=(x, y, c)=>{
         return{"x":x, "y":y, "vx":0, "vy":0, "color":c}
       }
+      
       random=()=>{
         return Math.random()*400+50
       }
+      
       create=(number, color)=>{
         group=[]
         for(let i=0; i < number; i++){
@@ -29,6 +34,8 @@
       }
       
       yellow = create(200, "yellow")
+      magenta = create(200, "magenta")
+      cyan = create(200, "cyan")
       
       update=()=>{
         m.clearRect(0, 0, 500, 500)
