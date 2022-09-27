@@ -42,10 +42,10 @@
       }
       
       rule = (particles1, particles2, g) => {
-        For(let i = 0; i < particles1.length; i++){
+        for(let i = 0; i < particles1.length; i++){
           fx = 0
           fy = 0
-          For(let j = 0; j < particles2.length; j++){
+          for(let j = 0; j < particles2.length; j++){
             a = particles1[i]
             b = particles2[j]
             dx = a.x - b.x
