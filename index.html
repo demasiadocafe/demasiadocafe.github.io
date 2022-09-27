@@ -5,7 +5,7 @@
   </head>
   <body>
     <h1>Artificial..? Life!</h1>
-    <canvas id="life" width="500" height="500"></canvas>
+    <canvas id="life" width="800" height="600"></canvas>
     <script>
       const canvas = document.getElementById('life');
       w = canvas.width
@@ -25,11 +25,11 @@
       }
       
       randomx = () => {
-        return (Math.random() * 0.8 + 0.1) * w
+        return (Math.random() * 0.9 + 0.1) * w
       }
       
       randomy = () => {
-        return (Math.random() * 0.8 + 0.1) * h
+        return (Math.random() * 0.9 + 0.1) * h
       }
 
       create = (number, color) => {
