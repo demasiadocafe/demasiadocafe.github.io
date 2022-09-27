@@ -49,7 +49,11 @@
         dx = a.x - b.x
         dy = a.y - b.y
         d = Math.sqrt(dx*dx+dy*dy)
-      
+        if(d > 0){
+          F = g * 1/d
+          fx += (F*dx)
+          fy += (F*dy)
+        }
         a.x += fx
         a.y += fy
 
