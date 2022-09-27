@@ -41,11 +41,26 @@
         return group
       }
       
-      yellow = create(200, "yellow")
-      magenta = create(200, "magenta")
-      cyan = create(200, "cyan")
+      rule = (particles1, particles2, g) ==> {
+        fx = 0
+        fy = 0
+        a = particles1[0]
+        b = particles2[1]
+        dx = a.x - b.x
+        dy = a.y - b.y
+        d = Math.sqrt(dx*dx+dy*dy)
+      
+        a.x += fx
+        a.y += fy
+
+      }
+      
+      yellow = create(2, "yellow")
+      //magenta = create(200, "magenta")
+      //cyan = create(200, "cyan")
       
       update = () => {
+        rule(yellow, yellow, -1)
         m.clearRect(0, 0, w, h)
         draw(0, 0, "black", w, h)
         for(i = 0; i < particles.length; i++){
