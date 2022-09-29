@@ -57,8 +57,10 @@
               fy += (F*dy)
             }
           }
-          a.x += fx
-          a.y += fy 
+          a.vx += fx
+          a.vy += fy
+          a.x += a.vx
+          a.y += a.vy 
         }
       }
       
