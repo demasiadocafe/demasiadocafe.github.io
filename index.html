@@ -60,7 +60,9 @@
           a.vx += fx
           a.vy += fy
           a.x += a.vx
-          a.y += a.vy 
+          a.y += a.vy
+          if(a.x <= 0 || a.x >= w){a.vx *= -1}
+          if(a.y <= 0 || a.y >= w){a.vy *= -1} 
         }
       }
       
