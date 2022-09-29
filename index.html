@@ -51,14 +51,15 @@
             dx = a.x - b.x
             dy = a.y - b.y
             d = Math.sqrt(dx * dx + dy * dy)
+            senxy = dx / d
             if(d > 0){
               F = g * 1/d
               fx += (F*dx)
               fy += (F*dy)
             }
           }
-          a.vx += fx
-          a.vy += fy
+          a.vx = (a.vx + fx) * 0.5
+          a.vy = (a.vy + fy) * 0.5
           a.x += a.vx
           a.y += a.vy
           if(a.x <= 0 || a.x >= w){a.vx *= -1}
