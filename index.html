@@ -11,17 +11,17 @@
       w = canvas.width
       h = canvas.height
 
-      m = document.getElementById("life").getContext('2d')
+      context = document.getElementById("life").getContext('2d')
       
-      draw = (x, y, c, sx, sy) => {
-        m.fillStyle = c
-        m.fillRect(x, y, sx, sy)
+      draw = (posx, posy, color, sizex, sizey) => {
+        context.fillStyle = color
+        context.fillRect(posx, posy, sizex, sizey)
       }
       
       particles = []
       
-      particle = (x, y, c) => {
-        return {"x": x, "y": y, "vx": 0, "vy": 0, "color": c}
+      particle = (posx, posy, color) => {
+        return {"x": posx, "y": posy, "vx": 0, "vy": 0, "color": color}
       }
       
       randomx = () => {
@@ -68,7 +68,7 @@
       
       update = () => {
         rule(yellow, yellow, -1)
-        m.clearRect(0, 0, w, h)
+        context.clearRect(0, 0, w, h)
         draw(0, 0, "black", w, h)
         for(i = 0; i < particles.length; i++){
           draw(particles[i].x, particles[i].y, particles[i].color, 5, 5)
