@@ -53,7 +53,7 @@
             distance = Math.sqrt(distancex * distancex + distancey * distancey)
             //senA = distancex / distance
             //cosA = distancey / distance
-            if(distance > 0 && distance < 80){
+            if(distance > 0 && distance < 800){
               force = g * 1 / distance
               forcex += (force * distancex)
               forcey += (force * distancey)
@@ -68,9 +68,9 @@
         }
       }
       
-      yellow = create(3, "yellow")
-      //magenta = create(200, "magenta")
-      //cyan = create(200, "cyan")
+      yellow = create(200, "yellow")
+      magenta = create(200, "magenta")
+      cyan = create(200, "cyan")
       
       update = () => {
         rule(yellow, yellow, -1)
