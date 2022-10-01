@@ -8,8 +8,8 @@
     <canvas id="life" width="800" height="600"></canvas>
     <script>
       const canvas = document.getElementById('life');
-      w = canvas.width
-      h = canvas.height
+      limitx = canvas.width
+      limity = canvas.height
 
       context = document.getElementById("life").getContext('2d')
       
@@ -21,15 +21,15 @@
       particles = []
       
       particle = (posx, posy, color) => {
-        return {"x": posx, "y": posy, "vx": 0, "vy": 0, "color": color}
+        return {"posx": posx, "posy": posy, "velx": 0, "vely": 0, "color": color}
       }
       
       randomx = () => {
-        return (Math.random() * 0.9 + 0.1) * w
+        return (Math.random() * 0.9 + 0.1) * limitx
       }
       
       randomy = () => {
-        return (Math.random() * 0.9 + 0.1) * h
+        return (Math.random() * 0.9 + 0.1) * limity
       }
 
       create = (number, color) => {
@@ -43,27 +43,28 @@
       
       rule = (particles1, particles2, g) => {
         for(let i = 0; i < particles1.length; i++){
-          fx = 0
-          fy = 0
+          forcex = 0
+          forcey = 0
           for(let j = 0; j < particles2.length; j++){
-            a = particles1[i]
-            b = particles2[j]
-            dx = a.x - b.x
-            dy = a.y - b.y
-            d = Math.sqrt(dx * dx + dy * dy)
-            senxy = dx / d
-            if(d > 0 $$ d < 80){
-              F = g * 1/d
-              fx += (F*dx)
-              fy += (F*dy)
+            p1 = particles1[i]
+            p2 = particles2[j]
+            distancex = p1.posx - p2.posx
+            distancey = p1.posy - p2.posy
+            distance = Math.sqrt(distancex * distancex + distancey * distancey)
+            //senA = distancex / distance
+            //cosA = distancey / distance
+            if(distance > 0 && distance < 80){
+              force = g * 1 / distance
+              forcex += (force * distancex)
+              forcey += (force * distancey)
             }
           }
-          a.vx = (a.vx + fx) * 0.5
-          a.vy = (a.vy + fy) * 0.5
-          a.x += a.vx
-          a.y += a.vy
-          if(a.x <= 0 || a.x >= w){a.vx *= -1}
-          if(a.y <= 0 || a.y >= w){a.vy *= -1} 
+          p1.velx = (p1.velx + forcex) * 0.5
+          p1.vely = (p1.vely + forcey) * 0.5
+          p1.posx += p1.velx
+          p1.posy += p1.vely
+          if(p1.posx <= 0 || p1.posx >= limitx){p1.velx *= -1}
+          if(p1.posy <= 0 || p1.posy >= limity){p1.vely *= -1} 
         }
       }
       
@@ -73,10 +74,10 @@
       
       update = () => {
         rule(yellow, yellow, -1)
-        context.clearRect(0, 0, w, h)
-        draw(0, 0, "black", w, h)
+        context.clearRect(0, 0, limitx, limity)
+        draw(0, 0, "black", limitx, limity)
         for(i = 0; i < particles.length; i++){
-          draw(particles[i].x, particles[i].y, particles[i].color, 5, 5)
+          draw(particles[i].posx, particles[i].posy, particles[i].color, 5, 5)
         }
         requestAnimationFrame(update)
       }
