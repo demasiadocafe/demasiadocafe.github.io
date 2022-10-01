@@ -74,6 +74,8 @@
       
       update = () => {
         rule(yellow, yellow, -1)
+        rule(yellow, magenta, 1)
+        rule(yellow, cyan, 1)
         context.clearRect(0, 0, limitx, limity)
         draw(0, 0, "black", limitx, limity)
         for(i = 0; i < particles.length; i++){
