@@ -78,25 +78,25 @@
         }
       }
       
-      yellow = create(50, "yellow")
-      magenta = create(50, "magenta")
-      cyan = create(50, "cyan")
+      yellow = create(3, "yellow")
+      //magenta = create(50, "magenta")
+      //cyan = create(50, "cyan")
       //black = create(50, "black")
       
       update = () => {
-        rule(yellow, yellow, 0.5)
-        rule(yellow, magenta, -0.5)
-        rule(yellow, cyan, -0.5)
+        rule(yellow, yellow, -1)
+        //rule(yellow, magenta, -0.5)
+        //rule(yellow, cyan, -0.5)
         //rule(yellow, black, -1)
         
-        rule(magenta, yellow, -0.5)
-        rule(magenta, magenta, 0.5)
-        rule(magenta, cyan, -0.5)
+        //rule(magenta, yellow, -0.5)
+        //rule(magenta, magenta, -0.9)
+        //rule(magenta, cyan, -0.5)
         //rule(magenta, black, -1)
         
-        rule(cyan, yellow, -0.5)
-        rule(cyan, magenta, -0.5)
-        rule(cyan, cyan, 0.5)
+        //rule(cyan, yellow, -0.5)
+        //rule(cyan, magenta, -0.5)
+        //rule(cyan, cyan, 0.5)
         //rule(cyan, black, -1)
         
         //rule(black, yellow, -1)
