@@ -69,8 +69,8 @@
           // delta_t = 1
           // vel(t) = vel(t-1) + acel * delta_t
           
-          p1.vel_x += acel_x // delta_t = 1 
-          p1.vel_y += acel_y
+          p1.vel_x = (p1.vel_x + acel_x) * 0.5
+          p1.vel_y = (p1.vel_y + acel_y) * 0.5
           p1.pos_x += p1.vel_x
           p1.pos_y += p1.vel_y
           if(p1.pos_x <= 0 || p1.pos_x >= space_width){p1.vel_x *= -1}
@@ -78,13 +78,13 @@
         }
       }
       
-      yellow = create(3, "yellow")
+      yellow = create(200, "yellow")
       //magenta = create(50, "magenta")
       //cyan = create(50, "cyan")
       //black = create(50, "black")
       
       update = () => {
-        rule(yellow, yellow, 1)
+        rule(yellow, yellow, 0.15)
         //rule(yellow, magenta, -0.5)
         //rule(yellow, cyan, -0.5)
         //rule(yellow, black, -1)
