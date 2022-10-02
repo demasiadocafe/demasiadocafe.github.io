@@ -66,9 +66,11 @@
           }
           acel_x = force_x // force_x / mass ; mass=1
           acel_y = force_y // force_y / mass ; mass=1
+          // delta_t = 1
+          // vel(t) = vel(t-1) + acel * delta_t
           
-          p1.vel_x = (p1.vel_x + force_x) * 0.5
-          p1.vel_y = (p1.vel_y + force_y) * 0.5
+          p1.vel_x += acel_x // delta_t = 1 
+          p1.vel_y += acel_y
           p1.pos_x += p1.vel_x
           p1.pos_y += p1.vel_y
           if(p1.pos_x <= 0 || p1.pos_x >= space_width){p1.vel_x *= -1}
@@ -79,28 +81,28 @@
       yellow = create(50, "yellow")
       magenta = create(50, "magenta")
       cyan = create(50, "cyan")
-      black = create(50, "black")
+      //black = create(50, "black")
       
       update = () => {
         rule(yellow, yellow, 0.5)
         rule(yellow, magenta, -0.5)
         rule(yellow, cyan, -0.5)
-        rule(yellow, black, -1)
+        //rule(yellow, black, -1)
         
         rule(magenta, yellow, -0.5)
         rule(magenta, magenta, 0.5)
         rule(magenta, cyan, -0.5)
-        rule(magenta, black, -1)
+        //rule(magenta, black, -1)
         
         rule(cyan, yellow, -0.5)
         rule(cyan, magenta, -0.5)
         rule(cyan, cyan, 0.5)
-        rule(cyan, black, -1)
+        //rule(cyan, black, -1)
         
-        rule(black, yellow, -1)
-        rule(black, magenta, -1)
-        rule(black, cyan, -1)
-        rule(black, black, -1)
+        //rule(black, yellow, -1)
+        //rule(black, magenta, -1)
+        //rule(black, cyan, -1)
+        //rule(black, black, -1)
         
         context.clearRect(0, 0, space_width, space_height)
         draw(0, 0, space_color, space_width, space_height)
