@@ -8,78 +8,104 @@
     <canvas id="life" width="800" height="600"></canvas>
     <script>
       const canvas = document.getElementById('life');
-      limitx = canvas.width
-      limity = canvas.height
+      space_width = canvas.width
+      space_height = canvas.height
+      space_color = "navy"
 
       context = document.getElementById("life").getContext('2d')
       
-      draw = (posx, posy, color, sizex, sizey) => {
+      draw = (pos_x, pos_y, color, size_x, size_y) => {
         context.fillStyle = color
-        context.fillRect(posx, posy, sizex, sizey)
+        context.fillRect(pos_x, pos_y, size_x, size_y)
       }
       
       particles = []
       
-      particle = (posx, posy, color) => {
-        return {"posx": posx, "posy": posy, "velx": 0, "vely": 0, "color": color}
+      particle = (pos_x, pos_y, color, mass, charge) => {
+        return {"pos_x": pos_x, "pos_y": pos_y, "vel_x": 0, "vel_y": 0, "color": color, "mass": mass, "charge": charge}
       }
       
-      randomx = () => {
-        return (Math.random() * 0.9 + 0.1) * limitx
+      random_x = () => {
+        return (Math.random() * 0.8 + 0.1) * space_width
       }
       
-      randomy = () => {
-        return (Math.random() * 0.9 + 0.1) * limity
+      random_y = () => {
+        return (Math.random() * 0.8 + 0.1) * space_height
       }
 
       create = (number, color) => {
         group =  []
         for(let i = 0; i < number; i++){
-          group.push(particle(randomx(), randomy(), color))
+          group.push(particle(random_x(), random_y(), color, 1, 1))
           particles.push(group[i])
         }
         return group
       }
       
-      rule = (particles1, particles2, g) => {
+      rule = (particles1, particles2, K) => {
+        // Calculate the summatory of all the forces applied to each particle
         for(let i = 0; i < particles1.length; i++){
-          forcex = 0
-          forcey = 0
-          for(let j = 0; j < particles2.length; j++){
-            p1 = particles1[i]
+          force_x = 0
+          force_y = 0
+          acel_x = 0
+          acel_y = 0
+          p1 = particles1[i]
+          for(let j = 0; j < particles2.length; j++){            
             p2 = particles2[j]
-            distancex = p1.posx - p2.posx
-            distancey = p1.posy - p2.posy
-            distance = Math.sqrt(distancex * distancex + distancey * distancey)
-            //senA = distancex / distance
-            //cosA = distancey / distance
-            if(distance > 0 && distance < 80){
-              force = g * 1 / distance
-              forcex += (force * distancex)
-              forcey += (force * distancey)
+            distance_x = p1.pos_x - p2.pos_x
+            distance_y = p1.pos_y - p2.pos_y
+            distance = Math.sqrt(distance_x * distance_x + distance_y * distance_y)
+            //sen_alfa = distance_x / distance
+            //cos_alfa = distance_y / distance
+            if(distance > 0){
+              force = K / (distance * distance)
+              acel = force // force/mass ; mass=1
+              force_x += (force * distance_x / distance)
+              force_y += (force * distance_y / distance)
             }
           }
-          p1.velx = (p1.velx + forcex) * 0.5
-          p1.vely = (p1.vely + forcey) * 0.5
-          p1.posx += p1.velx
-          p1.posy += p1.vely
-          if(p1.posx <= 0 || p1.posx >= limitx){p1.velx *= -1}
-          if(p1.posy <= 0 || p1.posy >= limity){p1.vely *= -1} 
+          acel_x = force_x // force_x / mass ; mass=1
+          acel_y = force_y // force_y / mass ; mass=1
+          
+          p1.vel_x = (p1.vel_x + force_x) * 0.5
+          p1.vel_y = (p1.vel_y + force_y) * 0.5
+          p1.pos_x += p1.vel_x
+          p1.pos_y += p1.vel_y
+          if(p1.pos_x <= 0 || p1.pos_x >= space_width){p1.vel_x *= -1}
+          if(p1.pos_y <= 0 || p1.pos_y >= space_height){p1.vel_y *= -1} 
         }
       }
       
       yellow = create(200, "yellow")
       magenta = create(200, "magenta")
       cyan = create(200, "cyan")
+      black = create(10, "black")
       
       update = () => {
-        rule(yellow, yellow, -1)
-        rule(yellow, magenta, 1)
-        rule(yellow, cyan, 1)
-        context.clearRect(0, 0, limitx, limity)
-        draw(0, 0, "black", limitx, limity)
+        rule(yellow, yellow, 0.5)
+        rule(yellow, magenta, -0.5)
+        rule(yellow, cyan, -0.5)
+        rule(yellow, black, -1)
+        
+        rule(magenta, yellow, -0.5)
+        rule(magenta, magenta, 0.5)
+        rule(magenta, cyan, -0.5)
+        rule(magenta, black, -1)
+        
+        rule(cyan, yellow, -0.5)
+        rule(cyan, magenta, -0.5)
+        rule(cyan, cyan, 0.5)
+        rule(cyan, black, -1)
+        
+        rule(black, yellow, -1)
+        rule(black, magenta, -1)
+        rule(black, cyan, -1)
+        rule(black, black, -1)
+        
+        context.clearRect(0, 0, space_width, space_height)
+        draw(0, 0, space_color, space_width, space_height)
         for(i = 0; i < particles.length; i++){
-          draw(particles[i].posx, particles[i].posy, particles[i].color, 5, 5)
+          draw(particles[i].pos_x, particles[i].pos_y, particles[i].color, 5, 5)
         }
         requestAnimationFrame(update)
       }
